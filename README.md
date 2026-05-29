@@ -16,7 +16,7 @@
 | **01. PRD 기획 확정** | 🟢 완료 | 요구사항 정의 및 MVP 기획 확정 | [01. PRD 프롬프트](file:///Users/ikarus1004/workspace/PRD-TRD_example/prompting/01.prd_generation.md) | [PRD 문서](file:///Users/ikarus1004/workspace/PRD-TRD_example/docs/prd/PRD_example.md) <br> [01. 기획 리포트](file:///Users/ikarus1004/workspace/PRD-TRD_example/report/01.prd_report.md) |
 | **02. TRD 기술 설계** | 🟢 완료 | 아키텍처 설계, API 설계 및 예외 처리 | [02. TRD 프롬프트](file:///Users/ikarus1004/workspace/PRD-TRD_example/prompting/02.trd_generation.md) | [TRD 문서](file:///Users/ikarus1004/workspace/PRD-TRD_example/docs/trd/TRD_example.md) <br> [02. 설계 리포트](file:///Users/ikarus1004/workspace/PRD-TRD_example/report/02.trd_report.md) |
 | **03. 기능 구현 및 개발** | 🟢 완료 | 실제 소스 코드 작성 및 기능 구현 | [03. 개발 프롬프트](file:///Users/ikarus1004/workspace/PRD-TRD_example/prompting/03.development.md) | [03. 개발 리포트](file:///Users/ikarus1004/workspace/PRD-TRD_example/report/03.dev_report.md) |
-| **04. 테스트 및 검증** | ⚪ 대기 | 테스트 시나리오 수행 및 품질 검증 | [04. 검증 프롬프트](file:///Users/ikarus1004/workspace/PRD-TRD_example/prompting/04.verification.md) | [04. 검증 리포트](file:///Users/ikarus1004/workspace/PRD-TRD_example/report/04.verify_report.md) |
+| **04. 테스트 및 검증** | 🟢 완료 | 테스트 시나리오 수행 및 품질 검증 | [04. 검증 프롬프트](file:///Users/ikarus1004/workspace/PRD-TRD_example/prompting/04.verification.md) | [04. 검증 리포트](file:///Users/ikarus1004/workspace/PRD-TRD_example/report/04.verify_report.md) |
 
 - **상태 범례**: ⚪ 대기 (Todo) \| 🟡 진행중 (In Progress) \| 🟢 완료 (Done)
 
