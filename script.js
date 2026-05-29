@@ -101,9 +101,100 @@ class BrowserSentiment {
             "unhappy": -2, "unpleasant": -2, "unsafe": -2, "unstable": -2, "unwanted": -2, "worthless": -3,
             "wrong": -2, "worries": -3, "worrying": -3, "anxious": -2, "anxiety": -2, "fearful": -2, "fearing": -2
         };
+
+        // Korean emotional roots regex lexicon mapping to valence scores (Client-side simple morphology)
+        this.koLexicon = [
+            { pattern: /좋아/g, score: 2 },
+            { pattern: /좋은/g, score: 2 },
+            { pattern: /좋습/g, score: 2 },
+            { pattern: /행복/g, score: 3 },
+            { pattern: /기쁘/g, score: 3 },
+            { pattern: /기쁩/g, score: 3 },
+            { pattern: /즐겁/g, score: 3 },
+            { pattern: /즐거/g, score: 3 },
+            { pattern: /최고/g, score: 4 },
+            { pattern: /감사/g, score: 2 },
+            { pattern: /사랑/g, score: 3 },
+            { pattern: /재밌/g, score: 3 },
+            { pattern: /재미/g, score: 2 },
+            { pattern: /신나/g, score: 3 },
+            { pattern: /멋/g, score: 2 },
+            { pattern: /웃음/g, score: 2 },
+            { pattern: /웃/g, score: 2 },
+            
+            { pattern: /슬프/g, score: -2 },
+            { pattern: /슬퍼/g, score: -2 },
+            { pattern: /슬픕/g, score: -2 },
+            { pattern: /힘들/g, score: -2 },
+            { pattern: /힘든/g, score: -2 },
+            { pattern: /힘듭/g, score: -2 },
+            { pattern: /우울/g, score: -3 },
+            { pattern: /화나/g, score: -2 },
+            { pattern: /화가/g, score: -2 },
+            { pattern: /짜증/g, score: -2 },
+            { pattern: /싫/g, score: -2 },
+            { pattern: /아프/g, score: -2 },
+            { pattern: /아픈/g, score: -2 },
+            { pattern: /지치/g, score: -2 },
+            { pattern: /피곤/g, score: -2 },
+            { pattern: /외롭/g, score: -2 },
+            { pattern: /외로/g, score: -2 },
+            { pattern: /무섭/g, score: -2 },
+            { pattern: /무서/g, score: -2 },
+            { pattern: /걱정/g, score: -2 },
+            { pattern: /불안/g, score: -2 },
+            { pattern: /싸웠/g, score: -2 },
+            { pattern: /싸워/g, score: -2 },
+            { pattern: /다퉜/g, score: -2 },
+            { pattern: /다투/g, score: -2 },
+            { pattern: /눈물/g, score: -1 }
+        ];
     }
 
     analyze(text) {
+        const hasKorean = /[ㄱ-ㅎ|ㅏ-ㅣ|가-힣]/.test(text);
+
+        if (hasKorean) {
+            let score = 0;
+            let positive = [];
+            let negative = [];
+            let words = [];
+
+            this.koLexicon.forEach((item) => {
+                let match;
+                item.pattern.lastIndex = 0;
+                while ((match = item.pattern.exec(text)) !== null) {
+                    let wordScore = item.score;
+                    
+                    // Korean Negation prefix check (e.g. "안 ", "못 ", "않 ")
+                    const subStrBefore = text.substring(Math.max(0, match.index - 5), match.index);
+                    if (/\b안\s*|\b못\s*|않\s*$/.test(subStrBefore)) {
+                        wordScore = -wordScore;
+                    }
+                    
+                    score += wordScore;
+                    words.push(match[0]);
+                    if (wordScore > 0) {
+                        positive.push(match[0]);
+                    } else if (wordScore < 0) {
+                        negative.push(match[0]);
+                    }
+                }
+            });
+
+            const tokens = text.split(/\s+/).filter(t => t.length > 0);
+            const comparative = tokens.length > 0 ? score / tokens.length : 0;
+
+            return {
+                score: score,
+                comparative: comparative,
+                tokens: tokens,
+                words: words,
+                positive: positive,
+                negative: negative
+            };
+        }
+
         // Tokenize text into lowercased words
         const tokens = text.toLowerCase()
             .replace(/[^\w\s]/g, ' ')
@@ -316,7 +407,7 @@ class BrowserSentiment {
             }, 400);
             
             // Alert user (PRD Exception handling)
-            alert("Please enter a valid English sentence (at least 2 characters).");
+            alert("Please enter a valid sentence (at least 2 characters).");
             return;
         }
 
@@ -344,8 +435,15 @@ class BrowserSentiment {
     function performSentimentAnalysis(text) {
         if (!sentimentAnalyzer) return;
 
-        // Perform analysis (using Sentiment.js)
-        const analysis = sentimentAnalyzer.analyze(text);
+        // Route Korean inputs or handle CDN failures using local BrowserSentiment
+        const hasKorean = /[ㄱ-ㅎ|ㅏ-ㅣ|가-힣]/.test(text);
+        let analysis;
+        if (hasKorean || typeof sentimentAnalyzer.analyze !== "function") {
+            const tempAnalyzer = new BrowserSentiment();
+            analysis = tempAnalyzer.analyze(text);
+        } else {
+            analysis = sentimentAnalyzer.analyze(text);
+        }
         
         // Determine label
         let label = "Neutral";
