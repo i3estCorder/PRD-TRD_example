@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Emotion Analyzer - Pure local Sentiment Analysis</title>
+    <!-- Google Fonts: Outfit & Inter for premium typography -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- FontAwesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Sentiment.js Browser Library -->
+    <script src="https://cdn.jsdelivr.net/npm/sentiment@5.0.2/lib/index.min.js"></script>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="app-background"></div>
+    <div class="app-container">
+        <!-- Main Glass Card -->
+        <main class="glass-card">
+            <!-- App Header -->
+            <header class="app-header">
+                <div class="logo-area">
+                    <i class="fa-solid fa-brain-circuit brain-icon"></i>
+                    <h1>Emotion Analyzer</h1>
+                </div>
+                <p class="subtitle">Analyze your English sentences and receive empathetic responses locally.</p>
+                <div class="notice-badge">
+                    <i class="fa-solid fa-circle-info"></i> Supports English text analysis only
+                </div>
+            </header>
+
+            <!-- Loading Error Banner (Hidden by default) -->
+            <div id="library-error-banner" class="error-banner hidden">
+                <i class="fa-solid fa-triangle-exclamation"></i>
+                <span>Loading sentiment analysis engine... Please wait or check your network.</span>
+            </div>
+
+            <!-- Input Section -->
+            <section class="input-section">
+                <div class="input-wrapper">
+                    <textarea 
+                        id="input-text" 
+                        placeholder="How was your day? Write down your feelings or thoughts here (min 2 chars)..."
+                        maxlength="500"
+                        disabled
+                    ></textarea>
+                    <div class="input-meta">
+                        <span id="char-counter" class="counter">0 / 500</span>
+                        <span id="validation-msg" class="validation-msg hidden">Please enter at least 2 characters.</span>
+                    </div>
+                </div>
+                <button id="analyze-btn" class="primary-btn" disabled>
+                    <span id="btn-text">Initializing Engine...</span>
+                    <i class="fa-solid fa-wand-magic-sparkles btn-icon"></i>
+                </button>
+            </section>
+
+            <!-- Result Section (Dynamically displayed and updated) -->
+            <section id="result-section" class="result-section hidden">
+                <div class="result-divider"></div>
+                <h2 class="section-title">Analysis Result</h2>
+                
+                <div class="result-grid">
+                    <!-- Sentiment Dashboard Card -->
+                    <div class="result-card main-result">
+                        <div class="sentiment-badge-wrap">
+                            <span id="sentiment-emoji" class="large-emoji">😐</span>
+                            <span id="sentiment-label" class="badge">Neutral</span>
+                        </div>
+                        <div class="scores-container">
+                            <div class="score-row">
+                                <span class="score-title">Sentiment Score</span>
+                                <div class="gauge-bar-bg">
+                                    <div id="score-gauge" class="gauge-bar-fill"></div>
+                                </div>
+                                <span id="score-val" class="score-numeric">0</span>
+                            </div>
+                            <div class="score-row">
+                                <span class="score-title">Comparative Density</span>
+                                <span id="comp-val" class="score-numeric text-muted">0.00</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Recommendation Box -->
+                    <div class="result-card recommendation-card">
+                        <div class="card-header">
+                            <i class="fa-solid fa-quote-left quote-icon"></i>
+                            <h3>Empathetic Feedback</h3>
+                        </div>
+                        <p id="recommendation-text" class="quote-text">Your empathetic response will appear here...</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- History Section -->
+            <section class="history-section">
+                <div class="result-divider"></div>
+                <div class="history-header">
+                    <h2 class="section-title">Recent History</h2>
+                    <button id="clear-history-btn" class="text-btn hidden">
+                        <i class="fa-regular fa-trash-can"></i> Clear All
+                    </button>
+                </div>
+                <div id="history-list" class="history-list">
+                    <p id="no-history-msg" class="info-text">No recent analysis yet. Try writing something above!</p>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <!-- Main Logic Script -->
+    <script src="script.js"></script>
+</body>
+</html>
