@@ -1,8 +1,24 @@
-# PRD & TRD 작성 예시 저장소 (PRD-TRD_example) 🚀
+# PRD & TRD 기반 개발 프로세스 (PRD-TRD_example) 🚀
 
-이 저장소는 **PRD (Product Requirement Document, 제품 요구사항 정의서)**와 **TRD (Technical Requirement Document, 기술 요구사항 정의서)**의 표준적인 구조와 작성 예시를 제공합니다.
+이 저장소는 **PRD (제품 요구사항 정의서)**와 **TRD (기술 요구사항 정의서)**를 활용하여 소프트웨어를 기획하고 개발하는 체계적인 프로세스를 보여줍니다.
 
-제품의 아이디어 기획 단계(PRD)부터 시작하여, 이를 구체적인 시스템 설계 및 아키텍처 단계(TRD)로 구체화하는 과정을 체계적으로 보여주기 위해 설계되었습니다.
+> [!NOTE]  
+> 모든 진행 상황과 산출물은 본 `README.md` 현황판에서 한눈에 모니터링할 수 있습니다.
+
+---
+
+## 📊 개발 프로세스 현황판 (Status Board)
+
+이 프로젝트는 아래의 **4단계 프로세스**에 따라 개발을 진행하며, 사용자가 AI에게 명령을 내릴 수 있는 **단계별 프롬프팅 가이드**와 개발 결과를 기록하는 **보고서 양식**이 유기적으로 연동되어 있습니다.
+
+| 단계 (Phase) | 상태 (Status) | 주요 작업 (Tasks) | 프롬프트 가이드 | 산출물 및 리포트 |
+| :--- | :---: | :--- | :---: | :---: |
+| **01. PRD 기획 확정** | 🟢 완료 | 요구사항 정의 및 MVP 기획 확정 | [01. PRD 프롬프트](file:///Users/ikarus1004/workspace/PRD-TRD_example/prompting/01.prd_generation.md) | [PRD 문서](file:///Users/ikarus1004/workspace/PRD-TRD_example/docs/prd/PRD_example.md) <br> [01. 기획 리포트](file:///Users/ikarus1004/workspace/PRD-TRD_example/report/01.prd_report.md) |
+| **02. TRD 기술 설계** | 🟢 완료 | 아키텍처 설계, API 설계 및 예외 처리 | [02. TRD 프롬프트](file:///Users/ikarus1004/workspace/PRD-TRD_example/prompting/02.trd_generation.md) | [TRD 문서](file:///Users/ikarus1004/workspace/PRD-TRD_example/docs/trd/TRD_example.md) <br> [02. 설계 리포트](file:///Users/ikarus1004/workspace/PRD-TRD_example/report/02.trd_report.md) |
+| **03. 기능 구현 및 개발** | 🟢 완료 | 실제 소스 코드 작성 및 기능 구현 | [03. 개발 프롬프트](file:///Users/ikarus1004/workspace/PRD-TRD_example/prompting/03.development.md) | [03. 개발 리포트](file:///Users/ikarus1004/workspace/PRD-TRD_example/report/03.dev_report.md) |
+| **04. 테스트 및 검증** | ⚪ 대기 | 테스트 시나리오 수행 및 품질 검증 | [04. 검증 프롬프트](file:///Users/ikarus1004/workspace/PRD-TRD_example/prompting/04.verification.md) | [04. 검증 리포트](file:///Users/ikarus1004/workspace/PRD-TRD_example/report/04.verify_report.md) |
+
+- **상태 범례**: ⚪ 대기 (Todo) \| 🟡 진행중 (In Progress) \| 🟢 완료 (Done)
 
 ---
 
@@ -26,17 +42,26 @@
 
 ## 📂 문서 구조
 
-프로젝트 루트 내에 다음과 같은 폴더 구조로 관리하는 것을 권장합니다.
+프로젝트 루트 내에 다음과 같은 폴더 구조로 관리합니다.
 
 ```text
 PRD-TRD_example/
+├── README.md                 # 마스터 대시보드 및 프로세스 현황판
+├── prompting/                # 사용자가 AI와 대화 시 복사할 단계별 프롬프트 가이드
+│   ├── 01.prd_generation.md  # 1단계 기획용
+│   ├── 02.trd_generation.md  # 2단계 기술설계용
+│   ├── 03.development.md     # 3단계 소스코드개발용
+│   └── 04.verification.md    # 4단계 QA검증용
+├── report/                   # 각 단계 완료 시 산출되는 검토 및 결과 보고서
+│   ├── 01.prd_report.md
+│   ├── 02.trd_report.md
+│   ├── 03.dev_report.md
+│   └── 04.verify_report.md
 ├── docs/
-│   ├── prd/                 # 제품 요구사항 정의서 (기획 단계)
-│   │   ├── PRD_template.md  # PRD 공통 템플릿
-│   │   └── PRD_example.md   # 실제 서비스 기획 예시
-│   └── trd/                 # 기술 요구사항 정의서 (설계 단계)
-│       ├── TRD_template.md  # TRD 공통 템플릿
-│       └── TRD_example.md   # 실제 시스템 아키텍처 설계 예시
+│   ├── prd/                  # 제품 요구사항 정의서
+│   │   └── PRD_example.md    # [Emotion Analyzer Web App PRD]
+│   └── trd/                  # 기술 요구사항 정의서
+│       └── TRD_example.md    # [Emotion Analyzer Web App TRD]
 └── README.md
 ```
 
@@ -84,8 +109,9 @@ graph TD
    git clone https://github.com/i3estCorder/PRD-TRD_example.git
    ```
 2. **템플릿 활용**:
-   - `docs/prd/PRD_template.md`를 참고하여 새로운 기획 문서를 작성해 보세요.
-   - `docs/trd/TRD_template.md`를 참고하여 기획에 맞는 시스템을 설계해 보세요.
+   - `docs/prd/PRD_example.md`를 참고하여 새로운 기획 문서를 작성해 보세요.
+   - `docs/trd/TRD_example.md`를 참고하여 기획에 맞는 시스템을 설계해 보세요.
+   - 개발 및 QA 단계에서는 `prompting/` 폴더에 있는 프롬프트를 활용하여 AI 어시스턴트에게 가이드를 내리고, 각 단계 완료 후 `report/` 폴더에 결과 보고서를 업데이트하세요.
 
 ---
 
